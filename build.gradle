@@ -1,0 +1,80 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+    id 'antlr'
+    id 'com.github.hierynomus.license' version '0.15.0'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.antlr', name: 'antlr4-runtime', version: '4.7.2'
+    antlr group: 'org.antlr', name: 'antlr4-runtime', version: '4.7.2'
+    compile group: 'org.graalvm.truffle', name: 'truffle-dsl-processor', version: '1.0.0-rc14'
+    compile group: 'org.graalvm.truffle', name: 'truffle-api', version: '1.0.0-rc14'
+}
+
+ext.antlr = [
+        destinationDir: "src/main/generated/com/github/javakky/smart/antlr"
+]
+
+generateGrammarSource {
+    outputDirectory = file(new File("${antlr.destinationDir}"))
+    arguments = ["-listener", "-no-visitor"].flatten()
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+downloadLicenses {
+    ext.apacheTwo = license('Apache License, Version 2.0', 'http://opensource.org/licenses/Apache-2.0')
+    ext.bsd = license('BSD License', 'http://www.opensource.org/licenses/bsd-license.php')
+
+    includeProjectDependencies = true
+    licenses = [
+            'org.apache.james:apache-mime4j:0.6' : apacheTwo,
+            'org.some-bsd:project:1.0' : bsd
+    ]
+
+    aliases = [
+            (apacheTwo) : ['The Apache Software License, Version 2.0', 'Apache 2', 'Apache License Version 2.0', 'Apache License, Version 2.0', 'Apache License 2.0', license('Apache License', 'http://www.apache.org/licenses/LICENSE-2.0')],
+            (bsd) : ['BSD', license('New BSD License', 'http://www.opensource.org/licenses/bsd-license.php')]
+    ]
+
+    dependencyConfiguration = 'compile'
+}
+
+javadoc {
+    options.encoding = 'UTF-8'
+    options.links("https://docs.oracle.com/javase/jp/8/docs/api")
+    options.locale = 'ja_JP'
+    options.memberLevel = JavadocMemberLevel.PRIVATE
+}
+
+apply plugin: 'idea'
+
+idea {
+    module {
+        sourceDirs += file('src/main/generated')
+        generatedSourceDirs += file('src/main/generated')
+        testSourceDirs += file('src/test/generated_tests')
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
