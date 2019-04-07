@@ -20,8 +20,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     antlr 'org.antlr:antlr4:4.7.2'
     compile "org.antlr:antlr4-runtime:4.7.2"
-    compile group: 'org.graalvm.truffle', name: 'truffle-dsl-processor', version: '1.0.0-rc14'
-    compile group: 'org.graalvm.truffle', name: 'truffle-api', version: '1.0.0-rc14'
+    compile group: 'org.graalvm.truffle', name: 'truffle-dsl-processor', version: '1.0.0-rc12'
+    compile group: 'org.graalvm.truffle', name: 'truffle-api', version: '1.0.0-rc12'
 }
 
 ext.antlr = [

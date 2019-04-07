@@ -839,4 +839,94 @@ public interface SmartListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitComp_if(SmartParser.Comp_ifContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumber(SmartParser.NumberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumber(SmartParser.NumberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#digit}.
+	 * @param ctx the parse tree
+	 */
+	void enterDigit(SmartParser.DigitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#digit}.
+	 * @param ctx the parse tree
+	 */
+	void exitDigit(SmartParser.DigitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void enterInteger(SmartParser.IntegerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void exitInteger(SmartParser.IntegerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#float_number}.
+	 * @param ctx the parse tree
+	 */
+	void enterFloat_number(SmartParser.Float_numberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#float_number}.
+	 * @param ctx the parse tree
+	 */
+	void exitFloat_number(SmartParser.Float_numberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#point_float}.
+	 * @param ctx the parse tree
+	 */
+	void enterPoint_float(SmartParser.Point_floatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#point_float}.
+	 * @param ctx the parse tree
+	 */
+	void exitPoint_float(SmartParser.Point_floatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#exponent_float}.
+	 * @param ctx the parse tree
+	 */
+	void enterExponent_float(SmartParser.Exponent_floatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#exponent_float}.
+	 * @param ctx the parse tree
+	 */
+	void exitExponent_float(SmartParser.Exponent_floatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#fraction}.
+	 * @param ctx the parse tree
+	 */
+	void enterFraction(SmartParser.FractionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#fraction}.
+	 * @param ctx the parse tree
+	 */
+	void exitFraction(SmartParser.FractionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#exponent}.
+	 * @param ctx the parse tree
+	 */
+	void enterExponent(SmartParser.ExponentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#exponent}.
+	 * @param ctx the parse tree
+	 */
+	void exitExponent(SmartParser.ExponentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmartParser#int_part}.
+	 * @param ctx the parse tree
+	 */
+	void enterInt_part(SmartParser.Int_partContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmartParser#int_part}.
+	 * @param ctx the parse tree
+	 */
+	void exitInt_part(SmartParser.Int_partContext ctx);
 }

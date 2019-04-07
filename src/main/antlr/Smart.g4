@@ -213,8 +213,8 @@ atom: ('(' (testlist_comp)? ')' |
        '{' (dictorsetmaker)? '}' |
        NAME | integer_value | float_value | STRING_LITERAL | CHAR_LITERAL | NULL | TRUE | FALSE);
 
-integer_value: value=INTEGER;
-float_value: value=FLOAT_NUMBER;
+integer_value: value=integer;
+float_value: value=float_number;
 
 testlist_comp: (test) ( comp_for | (COMMA (test))* (COMMA)? );
 
@@ -364,25 +364,25 @@ NEWLINE:
    }
 ;
 
-NUMBER: INTEGER | FLOAT_NUMBER;
+number: integer | float_number;
 
-INTEGER: NON_ZERO_DIGIT DIGIT* | '0';
+NON_ZERO_DIGIT: [1-9];
 
-fragment NON_ZERO_DIGIT: [1-9];
+digit: NON_ZERO_DIGIT | '0';
 
-fragment DIGIT: [0-9];
+integer: '0' | NON_ZERO_DIGIT (digit)*;
 
-FLOAT_NUMBER: POINT_FLOAT | EXPONENT_FLOAT;
+float_number: point_float | exponent_float;
 
-fragment POINT_FLOAT: INT_PART? FRACTION | INT_PART '.';
+point_float: int_part? fraction | int_part '.';
 
-fragment EXPONENT_FLOAT: (INT_PART | POINT_FLOAT) EXPONENT;
+exponent_float: (int_part | point_float) exponent;
 
-fragment FRACTION: '.' DIGIT+;
+fraction: '.' digit+;
 
-fragment EXPONENT: [eE] [+-]? DIGIT+;
+exponent: ('e'|'E') ('+'|'-')? digit+;
 
-fragment INT_PART: DIGIT+;
+int_part: digit+;
 
 NAME: ID_START ID_CONTINUE*;
 
