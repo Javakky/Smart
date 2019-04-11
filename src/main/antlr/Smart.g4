@@ -96,7 +96,7 @@ tokens { INDENT, DEDENT }
   }
 }
 
-main: classfile | funcfile | integer_value;
+main: classfile | funcfile | arith_expr;
 
 classfile: NEWLINE* (import_stmt NEWLINE)* (classdef | enumdef | traitdef | interfacedef) EOF;
 funcfile: NEWLINE* (import_stmt NEWLINE)* funcdef EOF;
@@ -199,10 +199,10 @@ expr: xor_expr (OR_OP xor_expr)*;
 xor_expr: and_expr (XOR and_expr)*;
 and_expr: shift_expr (AND_OP shift_expr)*;
 shift_expr: arith_expr ((LEFT_SHIFT|RIGHT_SHIFT) arith_expr)*;
-arith_expr: term ((ADD|MINUS) term)*;
-term: factor ((STAR|DIV|MOD|IDIV) factor)*;
-factor: (ADD|MINUS|NOT_OP) factor | power;
-power: atom_expr (POWER factor)?;
+arith_expr: (term ex=(ADD|MINUS) arith_expr) | term;
+term: (factor ex=(STAR|DIV|MOD|IDIV) term) | factor;
+factor: ex=(ADD|MINUS|NOT_OP) factor | power;
+power: atom_expr (ex=POWER factor)?;
 atom_expr: atom trailer*;
 
 trailer: '(' (arglist)? ')' | '[' test ']' | DOT NAME;

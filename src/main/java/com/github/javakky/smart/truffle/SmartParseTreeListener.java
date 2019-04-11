@@ -1,16 +1,17 @@
 package com.github.javakky.smart.truffle;
 
+import com.github.javakky.smart.antlr.SmartLexer;
 import com.github.javakky.smart.antlr.SmartListener;
 import com.github.javakky.smart.antlr.SmartParser;
-import com.github.javakky.smart.node.LongNode;
-import com.github.javakky.smart.node.SmartNode;
-import com.github.javakky.smart.node.SmartRootNode;
+import com.github.javakky.smart.node.*;
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.LinkedList;
+
+import static com.github.javakky.smart.antlr.SmartLexer.MINUS;
 
 /**
  * Truffle nodes creator.
@@ -692,7 +693,17 @@ public class SmartParseTreeListener implements SmartListener {
 
     @Override
     public void exitArith_expr(SmartParser.Arith_exprContext ctx) {
-
+        if(ctx.ex == null) return;
+        SmartNode right = smartNodes.pop();
+        SmartNode left = smartNodes.pop();
+        switch (ctx.ex.getType()){
+            case SmartLexer.ADD:
+                smartNodes.push(AddNodeGen.create(left, right));
+                break;
+            case MINUS:
+                smartNodes.push(SubNodeGen.create(left, right));
+                break;
+        }
     }
 
     @Override
@@ -702,7 +713,17 @@ public class SmartParseTreeListener implements SmartListener {
 
     @Override
     public void exitTerm(SmartParser.TermContext ctx) {
-
+        if(ctx.ex == null) return;
+        SmartNode right = smartNodes.pop();
+        SmartNode left = smartNodes.pop();
+        switch (ctx.ex.getType()){
+            case SmartLexer.DIV:
+                smartNodes.push(DivNodeGen.create(left, right));
+                break;
+            case SmartLexer.STAR:
+                smartNodes.push(MulNodeGen.create(left, right));
+                break;
+        }
     }
 
     @Override
@@ -712,7 +733,11 @@ public class SmartParseTreeListener implements SmartListener {
 
     @Override
     public void exitFactor(SmartParser.FactorContext ctx) {
-
+        if(ctx.ex == null) return;
+        switch (ctx.ex.getType()){
+            case MINUS:
+                smartNodes.push(MinusNodeGen.create(smartNodes.pop()));
+        }
     }
 
     @Override
@@ -722,7 +747,10 @@ public class SmartParseTreeListener implements SmartListener {
 
     @Override
     public void exitPower(SmartParser.PowerContext ctx) {
-
+        if(ctx.ex == null) return;
+        SmartNode right = smartNodes.pop();
+        SmartNode left = smartNodes.pop();
+        smartNodes.push(PowNodeGen.create(left, right));
     }
 
     @Override
